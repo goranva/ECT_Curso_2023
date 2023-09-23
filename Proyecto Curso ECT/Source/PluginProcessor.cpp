@@ -9,6 +9,8 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+#define PI juce::MathConstants<float>::pi
+
 //==============================================================================
 ProyectoCursoECTAudioProcessor::ProyectoCursoECTAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -19,7 +21,7 @@ ProyectoCursoECTAudioProcessor::ProyectoCursoECTAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), apvts(*this, nullptr, "Parameters", createParameters())
 #endif
 {
 }
@@ -95,6 +97,8 @@ void ProyectoCursoECTAudioProcessor::prepareToPlay (double sampleRate, int sampl
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+
+    AM.prepare(sampleRate);
 }
 
 void ProyectoCursoECTAudioProcessor::releaseResources()
@@ -131,31 +135,26 @@ bool ProyectoCursoECTAudioProcessor::isBusesLayoutSupported (const BusesLayout& 
 
 void ProyectoCursoECTAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    //juce::ScopedNoDenormals noDenormals;
+    //auto totalNumInputChannels  = getTotalNumInputChannels();
+    //auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    //float inputGainValue = apvts.getRawParameterValue("Volume")->load();
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
+    float inputGainValue = *apvts.getRawParameterValue("Volume");
 
-        // ..do something to the data...
-    }
+    float inputPanValue = *apvts.getRawParameterValue("Panning");
+
+    float inputRateValue = *apvts.getRawParameterValue("Rate");
+
+    float inputDryWetValue = *apvts.getRawParameterValue("DryWet");
+
+    dryBuffer.makeCopyOf(buffer);
+
+    gain.process(buffer, inputGainValue);
+    pan.process(buffer, inputPanValue);
+    AM.process(buffer, inputRateValue);
+    dryWet.process(dryBuffer, buffer, inputDryWetValue);
 }
 
 //==============================================================================
@@ -166,7 +165,8 @@ bool ProyectoCursoECTAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* ProyectoCursoECTAudioProcessor::createEditor()
 {
-    return new ProyectoCursoECTAudioProcessorEditor (*this);
+    return new juce::GenericAudioProcessorEditor(*this);
+    // return new ProyectoCursoECTAudioProcessorEditor (*this);
 }
 
 //==============================================================================
@@ -181,6 +181,29 @@ void ProyectoCursoECTAudioProcessor::setStateInformation (const void* data, int 
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout ProyectoCursoECTAudioProcessor::createParameters()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout parameters;
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "SliderFloat", 1 }, "SliderFloat", 0.0f, 100.0f, 50.0f));
+
+    parameters.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{ "SliderInt", 1 }, "SliderInt", 0, 100, 80));
+
+    parameters.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{ "Button", 1 }, "Button", false));
+
+    parameters.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{ "Options", 1 }, "Options", juce::StringArray{ "1/2", "1/4", "1/8", "1/16" }, 0));
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Volume", 1 }, "Volume", 0.0f, 2.0f, 1.0f));
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Panning", 1 }, "Panning", 0.0f, PI / 2.0f, PI / 4.0f));
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Rate", 1 }, "Rate", 0.01f, 20.0f, 1.0f));
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "DryWet", 1 }, "DryWet", 0.0f, 100.0f, 50.0f));
+
+    return parameters;
 }
 
 //==============================================================================

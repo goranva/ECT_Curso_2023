@@ -5,6 +5,16 @@
               jucerFormatVersion="1" pluginFormats="buildAU,buildVST3">
   <MAINGROUP id="Lquw1H" name="Proyecto Curso ECT">
     <GROUP id="{1A6A1DF0-2790-1A87-A9EF-F59258C7A397}" name="Source">
+      <GROUP id="{C039E112-6572-F7F2-A571-56E46832FD96}" name="DSP">
+        <FILE id="yX9Yok" name="DryWet.cpp" compile="1" resource="0" file="Source/DSP/DryWet.cpp"/>
+        <FILE id="QyFEw4" name="DryWet.h" compile="0" resource="0" file="Source/DSP/DryWet.h"/>
+        <FILE id="urgIOy" name="Modulator.cpp" compile="1" resource="0" file="Source/DSP/Modulator.cpp"/>
+        <FILE id="Rewhcp" name="Modulator.h" compile="0" resource="0" file="Source/DSP/Modulator.h"/>
+        <FILE id="DbbdoJ" name="Panning.cpp" compile="1" resource="0" file="Source/DSP/Panning.cpp"/>
+        <FILE id="L1xXbP" name="Panning.h" compile="0" resource="0" file="Source/DSP/Panning.h"/>
+        <FILE id="JPivSL" name="Volume.cpp" compile="1" resource="0" file="Source/DSP/Volume.cpp"/>
+        <FILE id="qPl2SX" name="Volume.h" compile="0" resource="0" file="Source/DSP/Volume.h"/>
+      </GROUP>
       <FILE id="f1sk6v" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="YcZ0t7" name="PluginProcessor.h" compile="0" resource="0"
@@ -18,7 +28,7 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="Proyecto Curso ECT"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Proyecto Curso ECT" enablePluginBinaryCopyStep="1"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="Proyecto Curso ECT"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

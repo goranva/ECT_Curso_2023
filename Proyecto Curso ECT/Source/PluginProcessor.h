@@ -9,6 +9,10 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "DSP/Volume.h"
+#include "DSP/Panning.h"
+#include "DSP/Modulator.h"
+#include "DSP/DryWet.h"
 
 //==============================================================================
 /**
@@ -56,7 +60,18 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    juce::AudioProcessorValueTreeState apvts;
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
+
 private:
+
+    juce::AudioBuffer<float> dryBuffer;
+
+    Volume gain;
+    Panning pan;
+    Modulator AM;
+    DryWet dryWet;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProyectoCursoECTAudioProcessor)
 };
