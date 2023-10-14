@@ -6,6 +6,8 @@
   <MAINGROUP id="Lquw1H" name="Proyecto Curso ECT">
     <GROUP id="{1A6A1DF0-2790-1A87-A9EF-F59258C7A397}" name="Source">
       <GROUP id="{C039E112-6572-F7F2-A571-56E46832FD96}" name="DSP">
+        <FILE id="H04Qh2" name="Biquad.cpp" compile="1" resource="0" file="Source/DSP/Biquad.cpp"/>
+        <FILE id="hDlMds" name="Biquad.h" compile="0" resource="0" file="Source/DSP/Biquad.h"/>
         <FILE id="yX9Yok" name="DryWet.cpp" compile="1" resource="0" file="Source/DSP/DryWet.cpp"/>
         <FILE id="QyFEw4" name="DryWet.h" compile="0" resource="0" file="Source/DSP/DryWet.h"/>
         <FILE id="urgIOy" name="Modulator.cpp" compile="1" resource="0" file="Source/DSP/Modulator.cpp"/>

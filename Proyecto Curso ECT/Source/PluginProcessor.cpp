@@ -99,6 +99,10 @@ void ProyectoCursoECTAudioProcessor::prepareToPlay (double sampleRate, int sampl
     // initialisation that you need..
 
     AM.prepare(sampleRate);
+
+    lowpassFilterBiquad.prepare(sampleRate);
+    lowpassFilterBiquad.setFrequency(1000.0f);
+    lowpassFilterBiquad.setQ(0.71f);
 }
 
 void ProyectoCursoECTAudioProcessor::releaseResources()
@@ -154,7 +158,11 @@ void ProyectoCursoECTAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     gain.process(buffer, inputGainValue);
     pan.process(buffer, inputPanValue);
     AM.process(buffer, inputRateValue);
-    dryWet.process(dryBuffer, buffer, inputDryWetValue);
+
+    lowpassFilterBiquad.process(buffer);
+
+
+    dryWet.process(dryBuffer, buffer, inputDryWetValue);  
 }
 
 //==============================================================================

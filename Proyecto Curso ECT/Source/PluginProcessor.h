@@ -13,6 +13,7 @@
 #include "DSP/Panning.h"
 #include "DSP/Modulator.h"
 #include "DSP/DryWet.h"
+#include "DSP/Biquad.h"
 
 //==============================================================================
 /**
@@ -71,6 +72,7 @@ private:
     Panning pan;
     Modulator AM;
     DryWet dryWet;
+    LPF_Biquad lowpassFilterBiquad;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProyectoCursoECTAudioProcessor)
