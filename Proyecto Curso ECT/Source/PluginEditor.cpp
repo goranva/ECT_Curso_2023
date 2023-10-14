@@ -13,13 +13,27 @@
 ProyectoCursoECTAudioProcessorEditor::ProyectoCursoECTAudioProcessorEditor (ProyectoCursoECTAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    // Volume Slider:
+   volumeSlider.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+
+   volumeSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+
+   addAndMakeVisible(volumeSlider);
+
+    volumeAttach = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+           audioProcessor.apvts, "Volume", volumeSlider);
+
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setLookAndFeel(&lookAndFeel);
+
+    setSize (700, 500);
 }
 
 ProyectoCursoECTAudioProcessorEditor::~ProyectoCursoECTAudioProcessorEditor()
 {
+    setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -37,4 +51,6 @@ void ProyectoCursoECTAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+    
+    volumeSlider.setBounds(0, 0, 100, 100);
 }

@@ -10,6 +10,8 @@
         <FILE id="hDlMds" name="Biquad.h" compile="0" resource="0" file="Source/DSP/Biquad.h"/>
         <FILE id="yX9Yok" name="DryWet.cpp" compile="1" resource="0" file="Source/DSP/DryWet.cpp"/>
         <FILE id="QyFEw4" name="DryWet.h" compile="0" resource="0" file="Source/DSP/DryWet.h"/>
+        <FILE id="ElGXPE" name="JuceFilters.cpp" compile="1" resource="0" file="Source/DSP/JuceFilters.cpp"/>
+        <FILE id="KHqXVK" name="JuceFilters.h" compile="0" resource="0" file="Source/DSP/JuceFilters.h"/>
         <FILE id="urgIOy" name="Modulator.cpp" compile="1" resource="0" file="Source/DSP/Modulator.cpp"/>
         <FILE id="Rewhcp" name="Modulator.h" compile="0" resource="0" file="Source/DSP/Modulator.h"/>
         <FILE id="DbbdoJ" name="Panning.cpp" compile="1" resource="0" file="Source/DSP/Panning.cpp"/>
@@ -24,6 +26,9 @@
       <FILE id="A4epCJ" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="MeQlpk" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+    <GROUP id="{9F347658-61C9-5C36-1414-8562CC3AF1EE}" name="LookAndFeel">
+      <FILE id="fkO66u" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
@@ -46,6 +51,7 @@
         <MODULEPATH id="juce_graphics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../modules"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX">
@@ -66,6 +72,7 @@
         <MODULEPATH id="juce_graphics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -79,6 +86,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

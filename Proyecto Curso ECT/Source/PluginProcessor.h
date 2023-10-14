@@ -14,6 +14,7 @@
 #include "DSP/Modulator.h"
 #include "DSP/DryWet.h"
 #include "DSP/Biquad.h"
+#include "DSP/JuceFilters.h"
 
 //==============================================================================
 /**
@@ -73,6 +74,9 @@ private:
     Modulator AM;
     DryWet dryWet;
     LPF_Biquad lowpassFilterBiquad;
+    JuceFilter bandpassFilter;
+    JuceFilter highpassFilter;
+    JuceFilter lowpassFilter;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProyectoCursoECTAudioProcessor)

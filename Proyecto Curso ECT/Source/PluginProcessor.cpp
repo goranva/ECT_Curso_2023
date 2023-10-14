@@ -100,9 +100,20 @@ void ProyectoCursoECTAudioProcessor::prepareToPlay (double sampleRate, int sampl
 
     AM.prepare(sampleRate);
 
+    // Custom filter:
     lowpassFilterBiquad.prepare(sampleRate);
     lowpassFilterBiquad.setFrequency(1000.0f);
     lowpassFilterBiquad.setQ(0.71f);
+
+    // JUCE DSP Module filters:
+    juce::dsp::ProcessSpec spec;
+    spec.sampleRate = sampleRate;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getTotalNumOutputChannels();
+
+    bandpassFilter.prepare(spec);
+    highpassFilter.prepare(spec);
+    lowpassFilter.prepare(spec);
 }
 
 void ProyectoCursoECTAudioProcessor::releaseResources()
@@ -149,7 +160,13 @@ void ProyectoCursoECTAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
 
     float inputPanValue = *apvts.getRawParameterValue("Panning");
 
-    float inputRateValue = *apvts.getRawParameterValue("Rate");
+    float inputRateValue = *apvts.getRawParameterValue("Modulation Rate");
+
+    int inputFilterTypeValue = *apvts.getRawParameterValue("Filter Type");
+
+    float inputFilterFrequencyValue = *apvts.getRawParameterValue("Filter Frequency");
+
+    float inputFilterQValue = *apvts.getRawParameterValue("Filter Q");
 
     float inputDryWetValue = *apvts.getRawParameterValue("DryWet");
 
@@ -159,8 +176,26 @@ void ProyectoCursoECTAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
     pan.process(buffer, inputPanValue);
     AM.process(buffer, inputRateValue);
 
-    lowpassFilterBiquad.process(buffer);
-
+      // Custom filter:
+    if (inputFilterTypeValue == 0) 
+    {
+      lowpassFilterBiquad.process(buffer);
+      lowpassFilterBiquad.setFrequency(inputFilterFrequencyValue);
+      lowpassFilterBiquad.setQ(inputFilterQValue);
+    } 
+      // JUCE DSP Module filters:
+    else if (inputFilterTypeValue == 1) 
+    {
+      lowpassFilter.processLowPass(buffer);
+    } 
+    else if (inputFilterTypeValue == 2)
+    {
+      bandpassFilter.processBandPass(buffer);
+    }
+    else if (inputFilterTypeValue == 3)
+    {
+      highpassFilter.processHighPass(buffer);
+    }
 
     dryWet.process(dryBuffer, buffer, inputDryWetValue);  
 }
@@ -173,8 +208,8 @@ bool ProyectoCursoECTAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* ProyectoCursoECTAudioProcessor::createEditor()
 {
-    return new juce::GenericAudioProcessorEditor(*this);
-    // return new ProyectoCursoECTAudioProcessorEditor (*this);
+    // return new juce::GenericAudioProcessorEditor(*this);
+    return new ProyectoCursoECTAudioProcessorEditor (*this);
 }
 
 //==============================================================================
@@ -207,7 +242,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProyectoCursoECTAudioProcess
 
     parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Panning", 1 }, "Panning", 0.0f, PI / 2.0f, PI / 4.0f));
 
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Rate", 1 }, "Rate", 0.01f, 20.0f, 1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Modulation Rate", 1 }, "Modulation Rate", 0.01f, 20.0f, 0.1f));
+    
+    parameters.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{"Filter Type", 1}, "Filter Type",juce::StringArray{"Custom LPF", "JUCE LPF", "JUCE BandPass", "JUCE HPF"}, 0));
+    
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"Filter Frequency", 1}, "Filter Frequency", 20.0f,20000.0f, 1000.0f));
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Filter Q", 1 }, "Filter Q", 0.01f, 1.0f, 0.71f));
 
     parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "DryWet", 1 }, "DryWet", 0.0f, 100.0f, 50.0f));
 

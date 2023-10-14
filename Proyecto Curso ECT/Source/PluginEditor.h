@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "LookAndFeel.h"
 
 //==============================================================================
 /**
@@ -28,6 +29,11 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ProyectoCursoECTAudioProcessor& audioProcessor;
+
+    LookAndFeel lookAndFeel;
+
+    juce::Slider volumeSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volumeAttach;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProyectoCursoECTAudioProcessorEditor)
 };
