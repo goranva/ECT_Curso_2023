@@ -23,9 +23,19 @@ public:
 
     void process(juce::AudioBuffer<float>& buffer, float rateValue);
 
+    float sineWave(int channel);
+
+    float squareWave(int channel);
+
+    float triangleWave(int channel);
+
+    float sawtoothWave(int channel);
+
 private:
 
     float sampleRate = 0.0f;
 
-    float x[2] { 0.0f };
+    float time[2];
+    float deltaTime[2];
+    float frequency;
 };

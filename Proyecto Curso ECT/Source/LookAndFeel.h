@@ -22,10 +22,18 @@ class LookAndFeel : public juce::LookAndFeel_V4
          setColour(juce::Slider::ColourIds::thumbColourId,
                  juce::Colours::white);
          setColour(juce::Slider::ColourIds::rotarySliderFillColourId,
-                 juce::Colours::green);
+                   juce::Colours::lightpink);
+
+         setColour(juce::TextButton::ColourIds::buttonOnColourId,
+                   juce::Colours::lightpink);
+         setColour(juce::TextButton::ColourIds::buttonColourId,
+                   juce::Colours::black);
+
+         setColour(juce::ComboBox::ColourIds::backgroundColourId,
+                   juce::Colours::lightpink);
      }
 
-     ~LookAndFeel()
+     ~LookAndFeel() override
      {
 
      }

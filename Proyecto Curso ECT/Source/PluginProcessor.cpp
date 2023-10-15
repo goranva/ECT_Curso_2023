@@ -160,6 +160,8 @@ void ProyectoCursoECTAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
 
     float inputPanValue = *apvts.getRawParameterValue("Panning");
 
+    bool modulatorBypassValue = (bool)*apvts.getRawParameterValue("Modulation Bypass");
+
     float inputRateValue = *apvts.getRawParameterValue("Modulation Rate");
 
     int inputFilterTypeValue = *apvts.getRawParameterValue("Filter Type");
@@ -174,7 +176,9 @@ void ProyectoCursoECTAudioProcessor::processBlock (juce::AudioBuffer<float>& buf
 
     gain.process(buffer, inputGainValue);
     pan.process(buffer, inputPanValue);
-    AM.process(buffer, inputRateValue);
+
+    if (!modulatorBypassValue)
+        AM.process(buffer, inputRateValue);
 
       // Custom filter:
     if (inputFilterTypeValue == 0) 
@@ -234,13 +238,18 @@ juce::AudioProcessorValueTreeState::ParameterLayout ProyectoCursoECTAudioProcess
 
     parameters.add(std::make_unique<juce::AudioParameterInt>(juce::ParameterID{ "SliderInt", 1 }, "SliderInt", 0, 100, 80));
 
-    parameters.add(std::make_unique<juce::AudioParameterBool>(juce::ParameterID{ "Button", 1 }, "Button", false));
-
     parameters.add(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID{ "Options", 1 }, "Options", juce::StringArray{ "1/2", "1/4", "1/8", "1/16" }, 0));
 
     parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Volume", 1 }, "Volume", 0.0f, 2.0f, 1.0f));
 
     parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Panning", 1 }, "Panning", 0.0f, PI / 2.0f, PI / 4.0f));
+    
+    parameters.add(std::make_unique<juce::AudioParameterChoice>(
+        juce::ParameterID{"Modulation Type", 1}, "Modulation Type",
+        juce::StringArray{"Sine", "Square", "Saw", "Triangle"}, 0));
+
+    parameters.add(std::make_unique<juce::AudioParameterBool>(
+        juce::ParameterID{"Modulation Bypass", 1}, "Modulation Bypass", false));
 
     parameters.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{ "Modulation Rate", 1 }, "Modulation Rate", 0.01f, 20.0f, 0.1f));
     

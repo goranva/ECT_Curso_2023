@@ -4,7 +4,13 @@
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
               jucerFormatVersion="1" pluginFormats="buildAU,buildVST3">
   <MAINGROUP id="Lquw1H" name="Proyecto Curso ECT">
+    <GROUP id="{5E96603A-CA57-8BD9-C671-E299086B2EE6}" name="Assets">
+      <FILE id="hUAIZ8" name="AxolotlBG.png" compile="0" resource="1" file="Source/Assets/AxolotlBG.png"/>
+    </GROUP>
     <GROUP id="{1A6A1DF0-2790-1A87-A9EF-F59258C7A397}" name="Source">
+      <GROUP id="{9F347658-61C9-5C36-1414-8562CC3AF1EE}" name="LookAndFeel">
+        <FILE id="fkO66u" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
+      </GROUP>
       <GROUP id="{C039E112-6572-F7F2-A571-56E46832FD96}" name="DSP">
         <FILE id="H04Qh2" name="Biquad.cpp" compile="1" resource="0" file="Source/DSP/Biquad.cpp"/>
         <FILE id="hDlMds" name="Biquad.h" compile="0" resource="0" file="Source/DSP/Biquad.h"/>
@@ -26,9 +32,6 @@
       <FILE id="A4epCJ" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="MeQlpk" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-    </GROUP>
-    <GROUP id="{9F347658-61C9-5C36-1414-8562CC3AF1EE}" name="LookAndFeel">
-      <FILE id="fkO66u" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
