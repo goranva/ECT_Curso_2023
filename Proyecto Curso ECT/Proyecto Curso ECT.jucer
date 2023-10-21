@@ -14,6 +14,8 @@
       <GROUP id="{C039E112-6572-F7F2-A571-56E46832FD96}" name="DSP">
         <FILE id="H04Qh2" name="Biquad.cpp" compile="1" resource="0" file="Source/DSP/Biquad.cpp"/>
         <FILE id="hDlMds" name="Biquad.h" compile="0" resource="0" file="Source/DSP/Biquad.h"/>
+        <FILE id="IWSz57" name="Distortion.cpp" compile="1" resource="0" file="Source/DSP/Distortion.cpp"/>
+        <FILE id="uFwPk7" name="Distortion.h" compile="0" resource="0" file="Source/DSP/Distortion.h"/>
         <FILE id="yX9Yok" name="DryWet.cpp" compile="1" resource="0" file="Source/DSP/DryWet.cpp"/>
         <FILE id="QyFEw4" name="DryWet.h" compile="0" resource="0" file="Source/DSP/DryWet.h"/>
         <FILE id="ElGXPE" name="JuceFilters.cpp" compile="1" resource="0" file="Source/DSP/JuceFilters.cpp"/>

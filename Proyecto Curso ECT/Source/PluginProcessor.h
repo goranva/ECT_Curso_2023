@@ -15,6 +15,7 @@
 #include "DSP/DryWet.h"
 #include "DSP/Biquad.h"
 #include "DSP/JuceFilters.h"
+#include "DSP/Distortion.h"
 
 //==============================================================================
 /**
@@ -77,6 +78,7 @@ private:
     JuceFilter bandpassFilter;
     JuceFilter highpassFilter;
     JuceFilter lowpassFilter;
+    Distortion distortion;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ProyectoCursoECTAudioProcessor)
